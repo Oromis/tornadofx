@@ -219,9 +219,9 @@ abstract class Component : Configurable {
     inline fun <reified T : Any> di(name: String? = null): ReadOnlyProperty<Component, T> = object : ReadOnlyProperty<Component, T> {
         var injected: T? = null
         override fun getValue(thisRef: Component, property: KProperty<*>): T {
-            val dicontainer = FX.dicontainer ?: throw AssertionError(
-                    "Injector is not configured, so bean of type ${T::class} cannot be resolved")
             if (injected == null) {
+                val dicontainer = FX.dicontainer ?: throw AssertionError(
+                  "Injector is not configured, so bean of type ${T::class} cannot be resolved")
                 injected = dicontainer.let {
                     if (name != null) {
                         it.getInstance<T>(name)
